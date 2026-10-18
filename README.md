@@ -44,13 +44,13 @@ plan.
    | Variable | Required | Default | Purpose |
    |---|---|---|---|
    | `TELTAQ_API_KEY` | yes | | Your `tq_sk_...` key |
-   | `TELTAQ_BASE_URL` | no | `http://localhost:8000/v1` | API base URL. Production: `https://api.teltaq.com/v1` |
+   | `TELTAQ_BASE_URL` | no | `https://api.teltaq.com/v1` | API base URL. Production: `https://api.teltaq.com/v1` |
    | `TELTAQ_MODEL` | no | | A chat `provider_connection_id` to pre-select in pickers |
    | `TELTAQ_VERBOSE` | no | `0` | `1` starts with request/response logging on |
 
    ```bash
    export TELTAQ_API_KEY=tq_sk_...          # PowerShell: $env:TELTAQ_API_KEY = "tq_sk_..."
-   export TELTAQ_BASE_URL=http://localhost:8000/v1
+   export TELTAQ_BASE_URL=https://api.teltaq.com/v1
    ```
 
 4. **Run:**
@@ -127,7 +127,7 @@ menu.
 
 ```text
 $ python teltaq_console.py
-Teltaq Data Plane API console  http://localhost:8000/v1
+Teltaq Data Plane API console  https://api.teltaq.com/v1
    1  List models
    ...
 > 2
@@ -176,7 +176,7 @@ Suite run (graph) completed  51c0... | usage {'prompt_tokens': 812, 'completion_
 ```python
 from openai import OpenAI, Stream
 
-client = OpenAI(base_url="http://localhost:8000/v1", api_key="tq_sk_...")
+client = OpenAI(base_url="https://api.teltaq.com/v1", api_key="tq_sk_...")
 
 # OpenAI-compatible: model = a provider_connection_id, "auto", or "agent:<id>"
 resp = client.chat.completions.create(
@@ -207,7 +207,7 @@ print(run["output"])
 
 | Symptom | Cause |
 |---|---|
-| `Could not reach the API` | Nothing is listening at `TELTAQ_BASE_URL`. From WSL or a container, `localhost` is not your Windows host, so use the host's address or run the sample on Windows |
+| `Could not reach the API` | Nothing is listening at `TELTAQ_BASE_URL`. |
 | `401 invalid_api_key` | Wrong key, or a key from a different Teltaq environment or database |
 | `401 api_key_revoked` / `api_key_expired` | Create a new key |
 | `403 feature_locked` | Your plan doesn't include API access (Pro / Team) or the capability (`feature` says which) |
