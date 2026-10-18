@@ -18,7 +18,7 @@ run's events until it finishes.
 
 Configuration (environment variables):
     TELTAQ_API_KEY        required, a tq_sk_... key (Settings -> API keys)
-    TELTAQ_BASE_URL       default http://localhost:8000/v1
+    TELTAQ_BASE_URL       default https://api.teltaq.com/v1
     TELTAQ_MODEL          optional default chat model (provider_connection_id)
     TELTAQ_VERBOSE        "1" to start with request/response logging on
 
@@ -118,7 +118,7 @@ class Console:
         api_key = os.environ.get("TELTAQ_API_KEY")
         if not api_key:
             sys.exit("Set TELTAQ_API_KEY to a Teltaq API key (Settings -> API keys).")
-        self.base_url = os.environ.get("TELTAQ_BASE_URL", "http://localhost:8000/v1").rstrip("/")
+        self.base_url = os.environ.get("TELTAQ_BASE_URL", "https://api.teltaq.com/v1").rstrip("/")
         self.default_model = os.environ.get("TELTAQ_MODEL") or None
         self.verbose = os.environ.get("TELTAQ_VERBOSE") == "1"
         # httpx hooks print each request / response when verbose is on. The key
@@ -829,7 +829,7 @@ def report_error(exc: Exception) -> None:
             print(dim(f"  x-request-id: {request_id}"))
     elif isinstance(exc, openai.APIConnectionError):
         print(red(bold("Could not reach the API.")) + red(f"  {exc}"))
-        print(dim("  Check TELTAQ_BASE_URL. From WSL or a container, 'localhost' is not the Windows host."))
+        print(dim("  Check TELTAQ_BASE_URL."))
     elif isinstance(exc, openai.APIError):
         # e.g. an error frame in the middle of a stream
         print(red(bold("API error: ")) + red(str(exc)))
